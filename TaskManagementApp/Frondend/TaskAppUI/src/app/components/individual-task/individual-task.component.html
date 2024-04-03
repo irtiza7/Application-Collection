@@ -1,0 +1,71 @@
+<div class="task-item">
+  <div class="task-details">
+    <div>
+      <label>Id:</label>
+      <h3 *ngIf="!isEditing">{{ task.id }}</h3>
+      <input
+        *ngIf="isEditing"
+        type="text"
+        [(ngModel)]="task.id"
+        class="form-control"
+      />
+    </div>
+    <div>
+      <label>Title:</label>
+      <h3 *ngIf="!isEditing">{{ task.title }}</h3>
+      <input
+        *ngIf="isEditing"
+        type="text"
+        [(ngModel)]="task.title"
+        class="form-control"
+      />
+    </div>
+    <div>
+      <label>Description:</label>
+      <p *ngIf="!isEditing">{{ task.description }}</p>
+      <textarea
+        *ngIf="isEditing"
+        [(ngModel)]="task.description"
+        class="form-control"
+      ></textarea>
+    </div>
+    <div>
+      <label>Status:</label>
+      <p>{{ task.status }}</p>
+    </div>
+  </div>
+
+  <div class="task-actions">
+    <button
+      *ngIf="task.status !== 'Done'"
+      class="btn btn-success btn-sm"
+      (click)="markTaskAsDone()"
+    >
+      <i class="fas fa-check"></i> Mark As Done
+    </button>
+    <button
+      *ngIf="!isEditing && task.status !== 'Done'"
+      class="btn btn-success btn-sm"
+      (click)="isEditing = true"
+    >
+      <i class="fas fa-edit"></i> Edit
+    </button>
+    <button
+      *ngIf="isEditing"
+      class="btn btn-primary btn-sm"
+      (click)="updateTask()"
+    >
+      <i class="fas fa-check"></i> Submit
+    </button>
+    <button
+      *ngIf="isEditing"
+      class="btn btn-secondary btn-sm"
+      (click)="cancelChanges()"
+    >
+      <i class="fas fa-times"></i> Cancel
+    </button>
+    <button class="btn btn-danger btn-sm" (click)="deleteTask()">
+      <i class="fas fa-trash-alt"></i> Delete
+    </button>
+  </div>
+</div>

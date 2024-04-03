@@ -1,0 +1,70 @@
+<div class="container mt-5">
+  <div class="card signup-card">
+    <div class="card-header">
+      <h5 class="card-title">Signup</h5>
+    </div>
+    <div class="card-body">
+      <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            [(ngModel)]="signupData.name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            [(ngModel)]="signupData.email"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            [(ngModel)]="signupData.password"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label"
+            >Confirm Password</label
+          >
+          <input
+            type="password"
+            class="form-control"
+            id="confirmPassword"
+            name="confirmPassword"
+            [(ngModel)]="signupData.confirmPassword"
+            required
+          />
+        </div>
+        <div class="mb-3" *ngIf="errorMessage" class="text-danger">
+          {{ errorMessage }}
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="
+            !signupForm.valid ||
+            signupData.password !== signupData.confirmPassword
+          "
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

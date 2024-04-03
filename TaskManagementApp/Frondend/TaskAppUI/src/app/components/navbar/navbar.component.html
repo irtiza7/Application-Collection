@@ -1,0 +1,34 @@
+<div class="container-flex">
+  <nav class="navbar navbar-light nav-styles" style="background-color: #e3f2fd">
+    <div class="col-8">
+      <span
+        class="navbar-brand mb-0 h1 title-span-style"
+        style="margin-left: 30px"
+      >
+        {{ navbarHeading | uppercase }}
+      </span>
+    </div>
+    <div class="col-4 d-flex justify-content-end align-items-center">
+      <div class="d-flex align-items-center" style="margin-right: 3px">
+        <label
+          *ngIf="userName.length > 1"
+          class="mr-3"
+          style="padding: 3px; font-weight: bold"
+        >
+          User:
+        </label>
+        <span *ngIf="userName.length > 1" style="padding: 3px">
+          {{ userName | titlecase }}
+        </span>
+      </div>
+      <button
+        *ngIf="showLogoutButton"
+        class="btn btn-primary ml-3"
+        (click)="logoutClicked()"
+        style="margin-right: 3px"
+      >
+        Logout
+      </button>
+    </div>
+  </nav>
+</div>
