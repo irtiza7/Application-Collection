@@ -1,0 +1,19 @@
+<app-navbar></app-navbar>
+<app-form [sectionName]="checkInName"></app-form>
+<app-form
+  [sectionName]="checkOutName"
+  (fareCalculated)="displayFare($event)"
+></app-form>
+
+<div class="mt-3 d-flex justify-content-center align-items-center">
+  <div class="text-center">
+    <h2>Parking Fare</h2>
+    <div
+      class="alert"
+      [ngClass]="{ 'alert-success': fare !== -1, 'alert-warning': fare === -1 }"
+    >
+      <p *ngIf="fare !== -1">Parking Fare: {{ fare | currency : "USD" }}</p>
+      <p *ngIf="fare === -1">Please calculate the fare first.</p>
+    </div>
+  </div>
+</div>

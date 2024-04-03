@@ -1,0 +1,30 @@
+services:
+  backend:
+    build: ./ParkingLotBusiness/
+    container_name: backend
+    environment:
+      - DB_HOST=db
+      - DB_NAME=vehicledb
+      - DB_USER=admin
+      - DB_PASSWORD=123456
+      - DB_PORT=5432
+    depends_on:
+      - db
+    env_file:
+      - ./ParkingLotBusiness/.env
+    ports:
+      - "6001:6001"
+
+  db:
+    image: postgres:16-bullseye
+    container_name: db
+    environment:
+      - POSTGRES_DB=vehicledb
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "6000:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    restart: always
