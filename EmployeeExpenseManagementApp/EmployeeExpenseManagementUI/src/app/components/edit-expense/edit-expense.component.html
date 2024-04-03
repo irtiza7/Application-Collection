@@ -1,0 +1,59 @@
+<div class="mb-4" style="border: 1px solid #ccc; padding: 10px">
+  <div style="position: relative">
+    <div class="form-group row">
+      <label for="title" class="col-sm-2 col-form-label">Expense Title:</label>
+      <div class="col-sm-4">
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          [(ngModel)]="expense.title"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="date" class="col-sm-2 col-form-label">Expense Date:</label>
+      <div class="col-sm-4">
+        <input
+          type="date"
+          class="form-control"
+          id="date"
+          [ngModel]="formatDateString(expense.expenseDate)"
+          (ngModelChange)="expense.expenseDate = $event"
+        />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="type" class="col-sm-2 col-form-label"> Expense Type:</label>
+      <div class="col-sm-4">
+        <select
+          class="form-control"
+          id="type"
+          [(ngModel)]="selectedExpenseType"
+          (ngModelChange)="onExpenseTypeChange($event)"
+        >
+          <option *ngFor="let type of expenseTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="amount" class="col-sm-2 col-form-label"
+        >Expense Amount:</label
+      >
+      <div class="col-sm-4">
+        <input
+          type="number"
+          class="form-control"
+          id="amount"
+          [(ngModel)]="expense.amount"
+          (input)="handleExpenseAmountChange($event)"
+        />
+      </div>
+    </div>
+  </div>
+</div>

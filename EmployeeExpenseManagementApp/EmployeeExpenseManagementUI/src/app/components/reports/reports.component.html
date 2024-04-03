@@ -1,0 +1,39 @@
+<div class="reports-container">
+  <div class="report">
+    <h5>Number of Expenses Forms per Status</h5>
+    <table>
+      <tr *ngFor="let item of this.expenseFormsPerStatus">
+        <td>{{ item.name }}</td>
+        <td>{{ item.value }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="report">
+    <h5>Number of Individual Expenses per Type</h5>
+    <table>
+      <tr *ngFor="let item of this.individualExpensesPerType">
+        <td>{{ item.name }}</td>
+        <td>{{ item.value }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="report full-width">
+    <h5>Expense Forms And Total Expenses Amount per Employee</h5>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Manager</th>
+        <th>Number of Expense Forms</th>
+        <th>Total Expenses Amount</th>
+      </tr>
+      <tr *ngFor="let item of expenseFormsAndExpensesAmountPerEmployee">
+        <td>{{ item.name }}</td>
+        <td>{{ item.manager }}</td>
+        <td>{{ item.numberOfExpenseForms }}</td>
+        <td>{{ item.totalExpensesAmount }}</td>
+      </tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="expense-forms-container">
+  <h5>{{ heading }}</h5>
+
+  <div class="filter-heading">
+    <hr />
+    <h6>Filter Expense Forms</h6>
+  </div>
+
+  <div class="filter-form">
+    <label for="currencyFilter" class="mr-2">Currency Type:</label>
+    <select
+      id="currencyFilter"
+      [(ngModel)]="currencyFilter"
+      (change)="filterExpenseForms()"
+      class="form-select mr-3 filter-select"
+    >
+      <option value="All">All</option>
+      <option value="PKR">PKR</option>
+      <option value="IND">IND</option>
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="TL">TL</option>
+    </select>
+
+    <label for="statusFilter" class="mr-2">Expense Status:</label>
+    <select
+      id="statusFilter"
+      [(ngModel)]="statusFilter"
+      (change)="filterExpenseForms()"
+      class="form-select filter-select"
+    >
+      <option value="All">All</option>
+      <option value="Pending">Pending</option>
+      <option value="Paid">Paid</option>
+      <option value="Approved">Approved</option>
+      <option value="Rejected">Rejected</option>
+    </select>
+
+    <hr />
+  </div>
+
+  <div class="expense-forms-list">
+    <div
+      *ngFor="let form of paginatedExpenseForms"
+      class="expense-form-item"
+      [ngClass]="{
+        green: form.expenseFormStatus === 'Paid',
+        red: form.expenseFormStatus === 'Rejected',
+        yellow: form.expenseFormStatus === 'Pending',
+        blue: form.expenseFormStatus === 'Approved'
+      }"
+      (click)="openExpenseFormDetails(form)"
+    >
+      <p>
+        Name:
+        {{ "Expense Form " + (filteredExpenseForms.indexOf(form) + 1) }}
+      </p>
+      <p>Created Date: {{ form.createdDate | date }}</p>
+      <p>Status: {{ form.expenseFormStatus }}</p>
+      <p>Total Amount: {{ form.totalAmount }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="isAdmin" class="pagination-controls text-center mt-3">
+    <button
+      (click)="previousPage()"
+      [disabled]="currentPage === 1"
+      class="btn btn-primary mr-2"
+    >
+      Previous
+    </button>
+    <span class="mr-2" style="margin: 7px"
+      >Page {{ currentPage }} of {{ totalPages }}</span
+    >
+    <button
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+      class="btn btn-primary"
+    >
+      Next
+    </button>
+  </div>
+</div>

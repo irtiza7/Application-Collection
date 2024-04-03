@@ -1,0 +1,56 @@
+<div class="container">
+  <div style="margin-top: 10px">
+    <div *ngFor="let expense of listOfExpenses; let i = index" class="mb-4">
+      <app-single-expense
+        [expense]="expense"
+        [expenseTypes]="expenseTypes"
+        [expenseIndex]="i"
+        (expenseAmountChangeEvent)="handleExpenseAmountChangeEvent($event)"
+        (expenseDeletedEvent)="handleExpenseDeletionEvent($event)"
+      ></app-single-expense>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-3" style="margin-bottom: 5px">
+        <button class="btn btn-primary" (click)="addExpense()">
+          + Add Expense
+        </button>
+      </div>
+
+      <hr />
+      <div class="mb-4">
+        <div class="form-group row">
+          <label for="currencyType" class="col-sm-3 col-form-label"
+            >Currency Type:</label
+          >
+          <div class="col-sm-3">
+            <select
+              class="form-control"
+              id="currencyType"
+              [(ngModel)]="selectedCurrency"
+            >
+              <option *ngFor="let currency of currencyTypes">
+                {{ currency }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px">
+          <p>Total Amount: {{ totalAmountOfExpenses }}</p>
+        </div>
+
+        <div class="form-group row" style="margin-top: 10px">
+          <div class="col-sm-3">
+            <button class="btn btn-primary" (click)="submitExpenses()">
+              Submit Form
+            </button>
+          </div>
+          <p *ngIf="error" style="color: rgb(178, 0, 0)">
+            {{ this.errorString }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

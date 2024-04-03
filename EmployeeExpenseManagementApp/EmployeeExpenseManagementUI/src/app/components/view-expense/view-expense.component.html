@@ -1,0 +1,24 @@
+<div class="expense-forms-container">
+  <h5>{{ heading }}</h5>
+  <div class="expense-forms-list">
+    <div
+      *ngFor="let form of expenseFormsFetchedFromApi"
+      class="expense-form-item"
+      [ngClass]="{
+        green: form.expenseFormStatus === 'Paid',
+        red: form.expenseFormStatus === 'Disapproved',
+        yellow: form.expenseFormStatus === 'Pending',
+        blue: form.expenseFormStatus === 'Approved'
+      }"
+      (click)="openExpenseFormDetails(form)"
+    >
+      <p>
+        Name:
+        {{ "Expense Form " + (expenseFormsFetchedFromApi.indexOf(form) + 1) }}
+      </p>
+      <p>Created Date: {{ form.createdDate | date }}</p>
+      <p>Status: {{ form.expenseFormStatus }}</p>
+      <p>Total Amount: {{ form.totalAmount }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="container-flex">
+  <nav class="navbar navbar-light bg-light nav-styles">
+    <div *ngIf="isUserAutheticated" class="col-8">
+      <a
+        routerLink="/displayExpenseForms"
+        class="btn btn-primary"
+        style="margin-left: 3px"
+        >Display Expense Forms</a
+      >
+      <a
+        *ngIf="showAddExpenseButtonToEmployee"
+        routerLink="/add-expense"
+        class="btn btn-primary mr-2"
+        style="margin-left: 3px"
+        >Add Expense Form</a
+      >
+      <a
+        *ngIf="showReports"
+        routerLink="/viewReports"
+        class="btn btn-primary mr-2"
+        style="margin-left: 3px"
+        >View Reports</a
+      >
+    </div>
+  </nav>
+</div>

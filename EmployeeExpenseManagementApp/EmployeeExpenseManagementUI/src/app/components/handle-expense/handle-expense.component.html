@@ -1,0 +1,93 @@
+<div style="margin: 0 20px">
+  <h3 style="margin-bottom: 10px; font-size: 1.5rem">Expense Details</h3>
+  <p><strong>Title:</strong> {{ expense.title }}</p>
+  <p><strong>Amount:</strong> {{ expense.amount }}</p>
+  <p><strong>Date:</strong> {{ expense.expenseDate | date }}</p>
+  <p><strong>Type:</strong> {{ expense.expenseType }}</p>
+  <p><strong>Status:</strong> {{ expense.expenseStatus }}</p>
+</div>
+
+<div
+  *ngIf="
+    authTableOptions.userType === 'Employee' &&
+    (expense.expenseStatus === 'Pending' ||
+      expense.expenseStatus === 'Disapproved')
+  "
+  style="margin: 0 20px"
+>
+  <button (click)="editExpense()" class="btn btn-warning mr-2">Edit</button>
+</div>
+
+<div *ngIf="authTableOptions.addCommentForManager" style="margin: 0 20px">
+  <textarea
+    [(ngModel)]="expense.managerComment"
+    rows="4"
+    cols="50"
+    placeholder="Comment"
+    style="margin-top: 10px; width: 100%; padding: 5px"
+  ></textarea>
+</div>
+<div *ngIf="!authTableOptions.addCommentForManager" style="margin: 0 20px">
+  <textarea
+    [ngModel]="expense.managerComment"
+    rows="4"
+    cols="50"
+    placeholder="Comment"
+    style="margin-top: 10px; width: 100%; padding: 5px"
+    disabled
+  ></textarea>
+</div>
+
+<div
+  *ngIf="
+    authTableOptions.showApproveAndRejectButtonsForManager &&
+    expense.expenseStatus !== 'Paid'
+  "
+  class="ml-3"
+  style="margin: 0 20px"
+>
+  <button (click)="approveExpense()" class="btn btn-primary mr-2">
+    Approve
+  </button>
+  <button (click)="disapproveExpense()" class="btn btn-danger">
+    Disapprove
+  </button>
+</div>
+
+<div
+  *ngIf="
+    authTableOptions.showPayButtonForAccountant &&
+    expense.expenseStatus === 'Approved'
+  "
+  style="margin: 0 20px"
+>
+  <button (click)="payExpense()" class="btn btn-primary mr-2">Pay</button>
+</div>
+
+<div style="margin: 0 20px">
+  <button
+    (click)="goBack()"
+    style="
+      margin: 20px 20px 20px 0;
+      padding: 10px 20px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    "
+  >
+    Back
+  </button>
+</div>
+
+<div *ngIf="showEditExpenseComponent" style="margin: 20px 20px 20px 20px">
+  <app-single-expense
+    [expense]="expense"
+    [expenseTypes]="expenseTypes"
+  ></app-single-expense>
+  <div>
+    <button (click)="saveChanges()" class="btn btn-primary mr-2">
+      Save Changes
+    </button>
+  </div>
+</div>

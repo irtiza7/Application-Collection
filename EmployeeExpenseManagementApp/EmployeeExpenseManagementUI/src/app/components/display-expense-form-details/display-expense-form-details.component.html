@@ -1,0 +1,109 @@
+<div
+  *ngIf="!switchExpenseFormToEditable && !showHistoryComponent"
+  class="expense-form-details-container"
+>
+  <h5>Expense Form Details</h5>
+
+  <!-- Expense Form Details -->
+  <div style="background-color: rgb(235, 235, 235); padding: 10px">
+    <p>Status: {{ selectedExpenseForm.expenseFormStatus }}</p>
+    <p>Total Amount: {{ selectedExpenseForm.totalAmount }}</p>
+    <p>Created Date: {{ selectedExpenseForm.createdDate | date }}</p>
+    <p>
+      Currency Type: {{ getCurrencyType(selectedExpenseForm.currencyTypeId) }}
+    </p>
+  </div>
+
+  <!-- List of Expenses in the Expense Form -->
+  <div class="expenses-list">
+    <h5>Expenses in Selected Expense Form</h5>
+
+    <div
+      *ngFor="let expense of fetchedExpenses"
+      class="expense-item"
+      [ngClass]="{ editable: switchExpenseFormToEditable }"
+    >
+      <p>Title: {{ expense.title }}</p>
+      <p>Amount: {{ expense.amount }}</p>
+      <p>Date: {{ expense.expenseDate | date }}</p>
+      <p>Type: {{ getExpenseType(expense.expenseTypeId) }}</p>
+    </div>
+  </div>
+
+  <!-- Panel for Adding and Viewing Comment -->
+  <div class="comment-panel">
+    <textarea
+      [disabled]="roleOfLoggedInUser !== 'Manager'"
+      placeholder="{{ this.selectedExpenseForm.managerComment }}"
+      style="height: 100px; width: 100%; resize: vertical"
+      [(ngModel)]="this.selectedExpenseForm.managerComment"
+    ></textarea>
+  </div>
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Buttons for Actions Based on Role of Logged In User -->
+  <div class="actions">
+    <button class="btn btn-secondary" (click)="goBackClicked()">Back</button>
+
+    <button
+      *ngIf="
+        roleOfLoggedInUser === 'Employee' &&
+        (selectedExpenseForm.expenseFormStatus === 'Pending' ||
+          selectedExpenseForm.expenseFormStatus === 'Rejected')
+      "
+      class="btn btn-primary"
+      (click)="editExpenseFormButtonPressed()"
+    >
+      Edit
+    </button>
+
+    <button
+      *ngIf="roleOfLoggedInUser === 'Manager'"
+      class="btn btn-success"
+      (click)="changeExpenseFormStatus('Approved')"
+    >
+      Approve
+    </button>
+
+    <button
+      *ngIf="roleOfLoggedInUser === 'Manager'"
+      class="btn btn-danger"
+      (click)="changeExpenseFormStatus('Rejected')"
+    >
+      Reject
+    </button>
+
+    <button
+      *ngIf="roleOfLoggedInUser === 'Accountant'"
+      class="btn btn-warning"
+      (click)="changeExpenseFormStatus('Paid')"
+    >
+      Pay
+    </button>
+
+    <button
+      *ngIf="roleOfLoggedInUser === 'Admin'"
+      class="btn btn-primary"
+      (click)="viewExpenseFormHistory()"
+    >
+      View Event History
+    </button>
+  </div>
+</div>
+
+<div *ngIf="switchExpenseFormToEditable && !showHistoryComponent">
+  <app-edit-expense-form
+    [expenseForm]="selectedExpenseForm"
+    [listOfExpenses]="fetchedExpenses"
+    (cancelEditing)="cancelEditingClicked()"
+  ></app-edit-expense-form>
+</div>
+
+<div *ngIf="showHistoryComponent">
+  <app-expense-form-history
+    [selectedExpenseForm]="selectedExpenseForm"
+    (backButtonPressed)="removeHistoryComponent()"
+  ></app-expense-form-history>
+</div>

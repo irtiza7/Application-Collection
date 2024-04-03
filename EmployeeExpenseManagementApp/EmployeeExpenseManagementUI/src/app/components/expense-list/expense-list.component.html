@@ -1,0 +1,24 @@
+<div
+  *ngIf="!showExpenseDetails"
+  class="container mt-4 mb-4"
+  style="overflow-y: scroll; max-height: 300px"
+>
+  <div
+    *ngFor="let expense of fetchedExpensesFromApi"
+    class="expense-item"
+    (click)="viewExpenseDetails(expense)"
+  >
+    <p>
+      {{ expense.title }} - {{ expense.amount }}
+      {{ getCurrencySymbol(expense.currencyTypeId) }} -
+      {{ expense.expenseDate | date }} - {{ expense.expenseType }} -
+      {{ expense.expenseStatus }}
+    </p>
+  </div>
+</div>
+
+<app-handle-expense
+  *ngIf="showExpenseDetails"
+  [expense]="selectedExpense"
+  (goBackButtonClickedEvent)="goBackButtonClicked()"
+></app-handle-expense>
